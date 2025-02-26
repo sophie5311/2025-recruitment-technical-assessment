@@ -45,13 +45,34 @@ app.post("/parse", (req:Request, res:Response) => {
 // [TASK 1] ====================================================================
 // Takes in a recipeName and returns it in a form that 
 const parse_handwriting = (recipeName: string): string | null => {
-  // TODO: implement me
-  return recipeName
+
+  //replacing hyphens and underscores
+  recipeName = recipeName.replace(/-|_/g, ' ');
+
+  //getting rid of all non alphabet characters and extra whitespace
+  recipeName = recipeName.replace(/[^a-z-A-Z ]/g, "").replace(/ +/, " ");
+  //Above line of code is from https://stackoverflow.com/a/41638791
+
+  //correcting capitalisation
+  recipeName = recipeName.replace(/(^\w|\s\w)(\S*)/g, (_,m1,m2) => m1.toUpperCase()+m2.toLowerCase())
+  //Above line of code is from https://stackoverflow.com/a/60610887 
+
+  //error case
+  if (recipeName.length <= 0) {
+    return null;
+  }
+
+  return recipeName;
 }
 
 // [TASK 2] ====================================================================
 // Endpoint that adds a CookbookEntry to your magical cookbook
 app.post("/entry", (req:Request, res:Response) => {
+
+  
+
+
+
   // TODO: implement me
   res.status(500).send("not yet implemented!")
 
